@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  nextjs:
+    build:
+      context: ../../
+      dockerfile: docker/development/Dockerfile
+    image: nextjs
+    ports:
+      - '3001:3000'
+    networks:
+      - nextjs
+  nginx:
+    build:
+      context: ../
+      dockerfile: nginx/Dockerfile
+    image: nginx
+    ports:
+      - '80:80'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    volumes:
+      - /home/caodangdung/projects/nextjs-docker-multi-env/docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - nextjs
+    depends_on:
+      - nextjs
+networks:
+  nextjs:
+    driver: bridge
