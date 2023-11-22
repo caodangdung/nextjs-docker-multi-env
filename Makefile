@@ -1,10 +1,11 @@
+scale = 1
 .PHONY: build-development
 build-development: ## Build the development docker image.
 	docker-compose -f docker/development/docker-compose.yml build
 
 .PHONY: start-development
 start-development: ## Start the development docker container.
-	docker-compose -f docker/development/docker-compose.yml up -d
+	docker-compose -f docker/development/docker-compose.yml up -d --scale nextjs=${scale}
 
 .PHONY: stop-development
 stop-development: ## Stop the development docker container.
